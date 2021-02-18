@@ -22,9 +22,9 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TreeView x:Name="TreeView_Main" Grid.Row="1" Grid.Column="0" Width="200" HorizontalAlignment="Left">
-                <TreeViewItem x:Name="TreeView_Pictures" Header="Список изображений:"/>
+                <TreeViewItem x:Name="TreeView_Pictures" Header="Список изображений:" IsExpanded="True" />
             </TreeView>
-            <Image x:Name="Image_Field" Stretch="Fill" Grid.Row="1" Grid.Column="1"/>
+            <Image x:Name="Image_Field" Stretch="Fill" Margin="10,0,10,0" Grid.Row="1" Grid.Column="1"/>
         </Grid>
     </Grid>
 </Window>
