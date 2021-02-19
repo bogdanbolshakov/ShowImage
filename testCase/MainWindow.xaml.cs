@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace testCase
 {
@@ -33,14 +34,21 @@ namespace testCase
 
         private void SetTreeViewItemPictures(string path)
         {
-            if (!path.Equals(""))
+            if(!path.Equals(""))
             {
-                var dirFiles = Directory.GetFiles(path).ToList();
-                picturesList.Clear();
-                picturesList = dirFiles.FindAll(item => item.EndsWith(".jpg") || item.EndsWith(".jpeg") ||
-                    item.EndsWith(".gif") || item.EndsWith(".png"));
-                TreeView_Pictures.Items.Clear();
-                picturesList.ForEach(item => AddNodeToTreeViewItemPictures(item));
+                Task.Factory.StartNew(
+                    () =>
+                    {
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            var dirFiles = Directory.GetFiles(path).ToList();
+                            picturesList.Clear();
+                            picturesList = dirFiles.FindAll(item => item.EndsWith(".jpg") || item.EndsWith(".jpeg") ||
+                                item.EndsWith(".gif") || item.EndsWith(".png"));
+                            TreeView_Pictures.Items.Clear();
+                            picturesList.ForEach(item => AddNodeToTreeViewItemPictures(item));
+                        }));
+                    });
             }
             else
             {
