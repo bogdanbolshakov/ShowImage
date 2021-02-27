@@ -10,57 +10,44 @@ namespace testCase.ViewerViewModel
 {
     class ViewerVM : INotifyPropertyChanged
     {
-        private string dir;
+        private Node node;
 
-        private string imageSource;
-
-        private ObservableCollection<string> nodes;
+        private BindingCommand openCommand;
 
         public string Dir
         {
-            get { return dir; }
+            get { return node.dir; }
             set
             {
-                dir = value;
-                OnPropertyChanged("Dir");
+                node.dir = value;
+                OnPropertyChanged();
             }
         }
 
         public string ImageSource
         {
-            get { return imageSource; }
+            get { return node.imageSource; }
             set
             {
-                imageSource = value;
-                OnPropertyChanged("ImageSource");
+                node.imageSource = value;
+                OnPropertyChanged();
             }
         }
 
         public ObservableCollection<string> Nodes
         {
-            get { return nodes; }
+            get { return node.nodes; }
             set
             {
-                nodes = value;
-                OnPropertyChanged("Nodes");
+                node.nodes = value;
+                OnPropertyChanged();
             }
         }
 
         public ViewerVM()
         {
-            dir = string.Empty;
-            nodes = new ObservableCollection<string>();
+            node = new Node();
         }
-
-        public void SetImageSource(object item)
-        {
-            if(item.GetType().ToString().Equals("System.String"))
-            {
-                ImageSource = dir + @"\" + item.ToString();
-            }
-        }
-
-        private BindingCommand openCommand;
 
         public BindingCommand OpenCommand
         {
@@ -71,20 +58,32 @@ namespace testCase.ViewerViewModel
                   {
                       FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
                       folderBrowserDialog.ShowDialog();
-                      Dir = !folderBrowserDialog.SelectedPath.Equals("") ? folderBrowserDialog.SelectedPath : Dir;
+                      UpdateDir(folderBrowserDialog.SelectedPath);
                       UpdateNodes();
                   }));
             }
         }
 
+        private void UpdateDir(string path)
+        {
+            Dir = !path.Equals("") ? path : Dir;
+        }
+
+        public void UpdateImageSource(object item)
+        {
+            ImageSource = item.GetType().ToString().Equals("System.String") ? node.dir + @"\" + item.ToString() : ImageSource;
+        }
+
         private void UpdateNodes()
         {
-            if(!Dir.Equals(""))
+            if (!Dir.Equals(""))
             {
                 Nodes.Clear();
-                Nodes = new ObservableCollection<string>(Directory.GetFiles(Dir).
-                    Select(item => item.Replace(dir + @"\", "")).ToList().
-                    FindAll(item => item.EndsWith(".jpg") || item.EndsWith(".jpeg") || item.EndsWith(".gif") || item.EndsWith(".png")));
+                Nodes = new ObservableCollection<string>(
+                    Directory.GetFiles(Dir).
+                    Select(item => item.Replace(node.dir + @"\", "")).ToList().
+                    FindAll(item => item.EndsWith(".jpg") || item.EndsWith(".jpeg") || item.EndsWith(".gif") || item.EndsWith(".png"))
+                    );
             }
         }
 

@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Micro="http://www.caliburnproject.org"
+        xmlns:micro="http://www.caliburnproject.org"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Viewer" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TreeView x:Name="TreeView_Main" Grid.Row="1" Grid.Column="0" Width="200" HorizontalAlignment="Left" Micro:Message.Attach="[Event SelectedItemChanged] = [Action SetImageSource($this.SelectedItem)]">
+            <TreeView x:Name="TreeView_Main" Grid.Row="1" Grid.Column="0" Width="200" HorizontalAlignment="Left" micro:Message.Attach="[Event SelectedItemChanged] = [Action UpdateImageSource($this.SelectedItem)]">
                 <TreeViewItem x:Name="TreeView_Pictures" Header="{Binding Path=Dir}" IsExpanded="True" ItemsSource="{Binding Path=Nodes}" />
             </TreeView>
             <Image x:Name="Image_Field" Margin="10,0,10,0" Grid.Row="1" Grid.Column="1" Source="{Binding Path=ImageSource}"/>
