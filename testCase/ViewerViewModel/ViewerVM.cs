@@ -79,10 +79,13 @@ namespace testCase.ViewerViewModel
 
         private void UpdateNodes()
         {
-            Nodes.Clear();
-            Nodes = new ObservableCollection<string>(Directory.GetFiles(Dir).
-                Select(item => item.Replace(dir + @"\", "")).ToList().
-                FindAll(item => item.EndsWith(".jpg") || item.EndsWith(".jpeg") || item.EndsWith(".gif") || item.EndsWith(".png")));
+            if(!Dir.Equals(""))
+            {
+                Nodes.Clear();
+                Nodes = new ObservableCollection<string>(Directory.GetFiles(Dir).
+                    Select(item => item.Replace(dir + @"\", "")).ToList().
+                    FindAll(item => item.EndsWith(".jpg") || item.EndsWith(".jpeg") || item.EndsWith(".gif") || item.EndsWith(".png")));
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
