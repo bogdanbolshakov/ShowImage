@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Forms;
 using testCase.Classes;
 
@@ -13,6 +14,8 @@ namespace testCase.ViewerViewModel
         private Node node;
 
         private BindingCommand openCommand;
+
+        private BindingCommand closeCommand;
 
         public string Dir
         {
@@ -60,6 +63,18 @@ namespace testCase.ViewerViewModel
                       folderBrowserDialog.ShowDialog();
                       UpdateDir(folderBrowserDialog.SelectedPath);
                       UpdateNodes();
+                  }));
+            }
+        }
+
+        public BindingCommand CloseCommand
+        {
+            get
+            {
+                return closeCommand ??
+                  (closeCommand = new BindingCommand(window =>
+                  {
+                      (window as Window).Close();
                   }));
             }
         }
