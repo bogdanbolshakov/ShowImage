@@ -20,7 +20,7 @@
                     <MenuItem Header="Open" Background="SteelBlue" BorderBrush="SteelBlue" Icon="{materialDesign:PackIcon Kind=SubdirectoryArrowRight}" Command="{Binding OpenCommand}"/>
                 </MenuItem>
             </Menu>
-            <Button Background="SteelBlue" IsCancel="True" BorderBrush="{x:Null}" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="655,0,0,0">
+            <Button Background="SteelBlue" Command="{Binding CloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" IsCancel="True" BorderBrush="{x:Null}" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="655,0,0,0">
                 <materialDesign:PackIcon Kind="Close" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             </Button>
         </StackPanel>
